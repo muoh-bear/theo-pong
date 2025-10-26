@@ -1,7 +1,7 @@
 # import pygame module in this program
-import pygame
+from objects.ball import move_ball
 
-from tools.games.objects.ball import move_ball
+import pygame
 
 # activate the pygame library .
 # initiate pygame and give permission
@@ -24,7 +24,7 @@ ball_width = 10
 ball_height = 10
 
 # velocity / speed of movement
-ball_x_vel = 1
+ball_x_vel = 0
 ball_y_vel = 0
 
 # left bar
@@ -45,14 +45,9 @@ right_bar_vel = 5
 
 # Indicates pygame is running
 run = True
- 
+
 # infinite loop
 while run:
-    # creates time delay of 20ms
-    pygame.time.delay(20)
-
-    move_ball()
-    
     # iterate over the list of Event objects
     # that was returned by pygame.event.get() method.
     for event in pygame.event.get():
@@ -63,8 +58,22 @@ while run:
             # it will make exit the while loop
             run = False
 
+    # creates time delay of 20ms
+    pygame.time.delay(100)
+
     # stores keys pressed
     keys = pygame.key.get_pressed()
+
+    if keys[pygame.K_SPACE]:
+        if ball_x_vel == 0:
+            ball_x_vel = 5
+        else:
+            ball_x_vel = 0
+    if keys[pygame.K_v]:
+        ball_x_vel -= 1
+    if keys[pygame.K_b]:
+        ball_x_vel += 1
+    (ball_x, ball_y) = move_ball(ball_x, ball_y, ball_x_vel, ball_y_vel)
 
     # if left arrow key is pressed
     if keys[pygame.K_LEFT] and ball_x > 0:

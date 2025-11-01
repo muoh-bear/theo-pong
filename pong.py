@@ -29,20 +29,19 @@ ball_y_vel = 0
 
 # left bar
 left_bar_width = 5
-left_bar_height = 200
+left_bar_height = 100
 left_bar_y = 20
 left_bar_x = 10
-left_bar_colour = (100, 25, 100)
-left_bar_vel = 5
+left_bar_colour = (0, 0, 255)
+left_bar_vel = 10
 
 # right bar
 right_bar_width = 5
-right_bar_height = 200
+right_bar_height = 100
 right_bar_y = 20
-right_bar_x = 490
-right_bar_colour = (100, 25, 100)
-right_bar_vel = 5
-
+right_bar_x = 480
+right_bar_colour = (255, 0, 0)
+right_bar_vel = 10
 # Indicates pygame is running
 run = True
 
@@ -64,11 +63,18 @@ while run:
     # stores keys pressed
     keys = pygame.key.get_pressed()
 
-    if keys[pygame.K_SPACE]:
+    if keys[pygame.K_SPACE] and right_bar_y == 20 and left_bar_y == 20:
         if ball_x_vel == 0:
             ball_x_vel = 5
-        else:
-            ball_x_vel = 0
+        ball_x_vel = -5
+    if ball_x == 0:
+        print("Red Team Won!!!")
+        pygame.time.delay(5000)
+        break
+    if ball_x == 490:
+        print("Blue Team Won!!!")
+        pygame.time.delay(5000)
+        break
     if keys[pygame.K_v]:
         ball_x_vel -= 1
     if keys[pygame.K_b]:
@@ -104,7 +110,7 @@ while run:
         right_bar_y += right_bar_vel
     # completely fill the surface object
     # with black colour
-    win.fill((0, 0, 0))
+    win.fill((0, 255, 0))
 
     # drawing object on screen which is rectangle here
     pygame.draw.rect(win, (255, 0, 0), (ball_x, ball_y, ball_width, ball_height))
